@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import User from './models/user';
 
 function App() {
   const [projectName, setProjectName] = useState('');
   const [apiVersion, setAPIVersion] = useState('');
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetch('/api/v1')
@@ -11,12 +13,30 @@ function App() {
         setProjectName(data.project);
         setAPIVersion(data.version);
       });
-  });
+    fetch('api/users/all')
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
+  }, []);
   return (
     <div>
-      <h1>Barebones starting page</h1>
-      <p>Project name is {projectName}</p>
-      <p>Project API version is {apiVersion}</p>
+      <section>
+        <h1>Barebones starting page</h1>
+        <p>Project name is {projectName}</p>
+        <p>Project API version is {apiVersion}</p>
+      </section>
+      <hr />
+      <section>
+        <h1>Let's pull all users</h1>
+        <ul>
+          <p>
+            {users.map((user) => (
+              <li key={user.id}>
+                {user.name} has the email address {user.email} and ID {user.id}.
+              </li>
+            ))}
+          </p>
+        </ul>
+      </section>
     </div>
   );
 }

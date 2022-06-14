@@ -1,10 +1,13 @@
 import express from 'express';
 import path from 'path';
+import { PrismaClient, User } from '@prisma/client';
 
 const app = express();
+const prisma = new PrismaClient();
 
 const assetsRouter = require('./server/assets-router');
 
+app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/src', assetsRouter);
 
@@ -13,6 +16,17 @@ app.get('/api/v1', (req, res) => {
     project: 'untitledCRUD',
     version: '0.0.1',
   });
+});
+
+app.get('/api/users/all', async (req, res) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
+});
+
+app.post('/api/users', async (req, res) => {
+  let { name, email } = req.body as User;
+  const user = await prisma.user.create({ data: { name, email } });
+  res.json(user);
 });
 
 app.get('/*', (_req, res) => {
