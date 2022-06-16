@@ -24,9 +24,11 @@ app.get('/api/users/all', async (req, res) => {
 });
 
 app.post('/api/users', async (req, res) => {
-  let { name, email } = req.body as User;
-  const user = await prisma.user.create({ data: { name, email } });
-  res.json(user);
+  let { firstName, lastName, email } = req.body as User;
+  const user = await prisma.user.create({
+    data: { firstName, lastName, email },
+  });
+  res.status(200).json(user);
 });
 
 app.get('/*', (_req, res) => {
