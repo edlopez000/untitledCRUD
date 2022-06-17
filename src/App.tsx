@@ -1,12 +1,28 @@
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import React from 'react';
+import PoemDisplay from './components/PoemDisplay';
 
 function App() {
   return (
-    <Container maxWidth="sm">
-      <Typography textAlign="center" variant="h3">
+    <Container maxWidth="md">
+      <Typography textAlign="center" variant="h3" marginTop={3}>
         Discover Poetry
       </Typography>
+      <Grid
+        container
+        direction={'column'}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        style={{ minHeight: '60vh' }}
+        spacing={0}
+      >
+        <Grid item>
+          <Box>
+            <PoemDisplay />
+          </Box>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
