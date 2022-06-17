@@ -4,7 +4,9 @@ import React from 'react';
 function App() {
   return (
     <Container maxWidth="sm">
-      <Typography textAlign={'center'}>Hello World</Typography>
+      <Typography textAlign="center" variant="h3">
+        Discover Poetry
+      </Typography>
     </Container>
   );
 }
