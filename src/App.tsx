@@ -13,7 +13,7 @@ function App() {
         setProjectName(data.project);
         setAPIVersion(data.version);
       });
-    fetch('api/users/all')
+    fetch('api/users')
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
