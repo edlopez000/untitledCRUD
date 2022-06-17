@@ -8,6 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/core": ">=7.0.0 <8.0.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.4",
     "@prisma/client": "^3.15.1",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.41",
