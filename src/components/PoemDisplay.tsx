@@ -6,7 +6,7 @@ import PoemService from '../services/poem';
 
 export default function PoemDisplay() {
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPoem, setCurrentPoem] = useState<Poem[]>([]);
+  const [poems, setPoems] = useState<Poem[]>([]);
   const [poemIndex, setPoemIndex] = useState(0);
 
   useEffect(() => {
@@ -15,10 +15,9 @@ export default function PoemDisplay() {
 
   const loadPoem = async () => {
     const res = await PoemService.getRandomPoem();
-    const newPoems = [...currentPoem, ...res];
-    setCurrentPoem(newPoems);
-    setPoemIndex(newPoems.length - 1);
-    console.log(newPoems);
+    const newPoems = [...poems, ...[res]].flat(); // TODO: Fix this appropriately
+    setPoems(newPoems);
+    setPoemIndex(0);
   };
 
   const prevPoem = () => {
@@ -32,23 +31,25 @@ export default function PoemDisplay() {
   return (
     <Paper sx={{ padding: 2, boxShadow: 15 }}>
       <Typography textAlign={'center'} variant={'h4'} fontWeight={'bold'}>
-        {currentPoem.length > 0 ? currentPoem[poemIndex].title : <Skeleton />}
+        {poems.length > 0 ? poems[poemIndex].title : <Skeleton />}
       </Typography>
       <Typography textAlign={'center'} fontStyle={'italic'}>
         by
       </Typography>
       <Typography textAlign={'center'} variant={'h6'} gutterBottom>
-        {currentPoem.length > 0 ? currentPoem[poemIndex].author : <Skeleton />}
+        {poems.length > 0 ? poems[poemIndex].author : <Skeleton />}
       </Typography>
       <hr />
-      {currentPoem.length > 0 ? (
-        currentPoem[poemIndex].lines.map((line) => (
-          <Typography>{line}</Typography>
+      {poems.length > 0 ? (
+        poems[poemIndex].lines.map((line, index) => (
+          <Typography key={index}>{line}</Typography>
         ))
       ) : (
         <Skeleton />
       )}
       <PoemActions
+        poems={poems}
+        poemIndex={poemIndex}
         loadNewPoem={loadPoem}
         nextPoem={nextPoem}
         prevPoem={prevPoem}
