@@ -1,6 +1,6 @@
 import { Box, Button, Paper, Stack } from '@mui/material';
 import Poem from '../models/poems';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface PoemActionsProps {
   poems: Poem[];
@@ -10,6 +10,10 @@ interface PoemActionsProps {
   prevPoem: () => void;
 }
 
+interface KeyboardEvent {
+  key: string;
+}
+
 export default function PoemActions({
   poems,
   poemIndex,
@@ -17,8 +21,28 @@ export default function PoemActions({
   nextPoem,
   prevPoem,
 }: PoemActionsProps) {
+  useEffect(() => {
+    document.addEventListener('keydown', keyHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyHandler);
+    };
+  }, [poemIndex]);
+
+  const keyHandler = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft' && poemIndex > 0) {
+      prevPoem();
+    }
+    if (event.key === 'ArrowRight' && poemIndex !== poems.length - 1) {
+      nextPoem();
+    }
+    if (event.key === 'Space') {
+      loadNewPoem();
+    }
+  };
+
   return (
-    <Box display={'flex'} justifyContent={'center'}>
+    <Box display={'flex'} justifyContent={'center'} onKeyDown={keyHandler}>
       <Button
         disabled={poemIndex === 0}
         variant={'contained'}
