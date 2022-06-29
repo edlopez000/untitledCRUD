@@ -1,4 +1,4 @@
-import { Paper, Skeleton, Typography } from '@mui/material';
+import { AppBar, Paper, Skeleton, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import Poem from '../models/poems';
 import PoemActions from './PoemActions';
@@ -47,13 +47,15 @@ export default function PoemDisplay() {
       ) : (
         <Skeleton />
       )}
-      <PoemActions
-        poems={poems}
-        poemIndex={poemIndex}
-        loadNewPoem={loadPoem}
-        nextPoem={nextPoem}
-        prevPoem={prevPoem}
-      />
+      <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, py: 0.25 }}>
+        <PoemActions
+          poems={poems}
+          poemIndex={poemIndex}
+          loadNewPoem={loadPoem}
+          nextPoem={nextPoem}
+          prevPoem={prevPoem}
+        />
+      </AppBar>
     </Paper>
   );
 }

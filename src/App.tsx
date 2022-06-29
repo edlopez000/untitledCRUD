@@ -14,11 +14,11 @@ function App() {
         display={'flex'}
         justifyContent={'center'}
         alignItems={'center'}
-        style={{ minHeight: '60vh' }}
+        style={{ minHeight: '70vh' }}
         spacing={0}
       >
         <Grid item>
-          <Box>
+          <Box minWidth={'60vw'}>
             <PoemDisplay />
           </Box>
         </Grid>
