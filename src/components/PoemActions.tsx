@@ -1,7 +1,9 @@
-import { Box, Button, Paper, Stack } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { Box, Button } from '@mui/material';
+import { useEffect } from 'react';
 import Poem from '../models/poems';
-import React, { useEffect } from 'react';
-
 interface PoemActionsProps {
   poems: Poem[];
   poemIndex: number;
@@ -49,14 +51,14 @@ export default function PoemActions({
         sx={{ mx: 1 }}
         onClick={() => prevPoem()}
       >
-        Previous
+        <ArrowBackIcon />
       </Button>
       <Button
         variant={'contained'}
         sx={{ mx: 1 }}
         onClick={() => loadNewPoem()}
       >
-        Get New Poem
+        <RefreshIcon />
       </Button>
       <Button
         disabled={poemIndex === poems.length - 1}
@@ -64,7 +66,7 @@ export default function PoemActions({
         sx={{ mx: 1 }}
         onClick={() => nextPoem()}
       >
-        Next
+        <ArrowForwardIcon />
       </Button>
     </Box>
   );
